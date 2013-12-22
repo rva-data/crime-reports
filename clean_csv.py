@@ -12,14 +12,16 @@ def clean_data(infile, outfile):
     to the file or file-like output object.
     """
     reader = csv.reader(infile)
-    writer = csv.writer(outfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
+    writer = csv.writer(outfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
     for row in reader:
         out_row = []
         for column in row:
             if isinstance(column, str):
-                out_row.append(column.strip())
+                val = column.strip()
             else:
-                out_row.append(column)
+                val = column
+            val = val if val else None  # Ensure empty values are not quoted
+            out_row.append(val)
         writer.writerow(out_row)
 
 
