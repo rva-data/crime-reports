@@ -3,11 +3,13 @@
 -- UPPERCASE names match the exported data columns while lowercase column names
 -- represent calculated or updated values.
 
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+DROP TABLE IF EXISTS "crime_reports";
 CREATE TABLE "crime_reports" (
-    "INCIDENT_NUMBER" varchar(100) PRIMARY KEY,
+    "INCIDENT_NUMBER" varchar(100),
     "INCIDENT_TIME" time,
     "OFFENSE_NUMBER" int4 DEFAULT NULL,
-    "OFFENSE_CODE" varchar(4) DEFAULT NULL,
+    "OFFENSE_CODE" varchar(5) DEFAULT NULL,
     "OFFENSE_CODE_DESC" varchar(100) DEFAULT NULL,
     "OFFENSE_RESTRICTED_INDICATOR" varchar(1) DEFAULT NULL,
     "ATTEMPTED_CRIME_FLG_DESC" varchar(100) DEFAULT NULL,
@@ -74,6 +76,7 @@ CREATE TABLE "crime_reports" (
     "VEHICLE_RECOVERY_CITY" varchar(100) DEFAULT NULL,
     "VEHICLE_RECOVERY_STATE" varchar(2) DEFAULT NULL,
     "VEHICLE_RECOVERY_ZIP" varchar(100) DEFAULT NULL,
+    "id" uuid primary key default uuid_generate_v4(),
     "timestamp" timestamp DEFAULT NULL,
     "geom" "geometry" DEFAULT NULL
 );
